@@ -31,7 +31,8 @@ func main() {
 	button.ConnectClicked(func(checked bool) {
 		//6. Weise dem Knopf ein Signal zu, das beim Drücken des Knopfes eine
 		//   Funktion ausführen soll
-		widgets.QMessageBox_Information(nil, "Titel des Infofensters", input.Text(), widgets.QMessageBox__Ok, widgets.QMessageBox__Ok)
+		widgets.QMessageBox_Information(nil, "Titel des Infofensters",
+			input.Text(), widgets.QMessageBox__Ok, widgets.QMessageBox__Ok)
 	})
 
 	//7.  Weise die Input-Widges dem Layout zu
