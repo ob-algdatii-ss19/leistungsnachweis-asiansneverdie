@@ -1,6 +1,6 @@
 package controller
 
-import "github.com/ob-algdatii-ss19/leistungsnachweis-asiansneverdie/snake/model"
+import "../model"
 
 func Main() {
 	playground := model.NewPlayground()
