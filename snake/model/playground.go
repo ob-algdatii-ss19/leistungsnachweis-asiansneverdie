@@ -4,10 +4,10 @@ type CONTENT int
 
 const (
 	EMPTY  CONTENT = 0
-	BORDER  CONTENT = 1
-	HEAD CONTENT = 2
-	TAIL CONTENT = 3
-	FOOD CONTENT = 4
+	BORDER CONTENT = 1
+	HEAD   CONTENT = 2
+	TAIL   CONTENT = 3
+	FOOD   CONTENT = 4
 )
 
 type Playground interface {
@@ -42,17 +42,17 @@ func (pg *playgroundImpl) CreateEmptyPlayground(height, width int) {
 func (pg *playgroundImpl) CreateOuterBorders() {
 	for i := range pg.playground {
 		for j := range pg.playground[i] {
-			if i == 0 || i == len(pg.playground) - 1 {
+			if i == 0 || i == len(pg.playground)-1 {
 				pg.playground[i][j] = int(BORDER)
 			}
-			if j == 0 || j == len(pg.playground[0]) -1 {
+			if j == 0 || j == len(pg.playground[0])-1 {
 				pg.playground[i][j] = int(BORDER)
 			}
 		}
 	}
 }
 
-func (pg *playgroundImpl) Print()  {
+func (pg *playgroundImpl) Print() {
 	for i := range pg.playground {
 		for j := range pg.playground[i] {
 			switch pg.playground[i][j] {
