@@ -1,6 +1,6 @@
 package controller
 
-import "github.com/Plateria/AlgoDatII/leistungsnachweis-asiansneverdie/snake/model"
+import "github.com/ob-algdatii-ss19/leistungsnachweis-asiansneverdie/snake/model"
 
 func Main() {
 	playground := model.NewPlayground()

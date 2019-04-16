@@ -1,7 +1,7 @@
 package test
 
 import (
-	"github.com/Plateria/AlgoDatII/leistungsnachweis-asiansneverdie/snake/controller"
+	"github.com/ob-algdatii-ss19/leistungsnachweis-asiansneverdie/snake/controller"
 	"testing"
 )
 
