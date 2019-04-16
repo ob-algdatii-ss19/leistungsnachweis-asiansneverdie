@@ -1,5 +1,1 @@
 package snake
-
-func main() {
-
-}
