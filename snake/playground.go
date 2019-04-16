@@ -1,4 +1,4 @@
-package model
+package snake
 
 type CONTENT int
 

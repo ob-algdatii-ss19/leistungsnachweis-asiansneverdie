@@ -1,10 +1,9 @@
-package test
+package snake
 
 import (
-	"../controller"
 	"testing"
 )
 
 func TestPlaygroundCreate(t *testing.T) {
-	controller.Main()
+	Main()
 }
