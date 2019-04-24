@@ -13,7 +13,10 @@ const (
 type Playground interface {
 	CreateEmptyPlayground(height, width int)
 	CreateOuterBorders()
+	CreateSnake(snake Snake)
 	Print()
+	DeleteSnake()
+	GetContent(x, y int) CONTENT
 }
 
 type playgroundImpl struct {
@@ -52,6 +55,33 @@ func (pg *playgroundImpl) CreateOuterBorders() {
 	}
 }
 
+func (pg *playgroundImpl) CreateSnake(snake Snake) {
+	part := snake.Head
+	pg.playground[part.x][part.y] = int(HEAD)
+	for {
+		part = part.next
+		if part == nil {
+			break
+		}
+		pg.playground[part.x][part.y] = int(TAIL)
+	}
+}
+
+func (pg *playgroundImpl) DeleteSnake() {
+	for i := range pg.playground {
+		for j := range pg.playground[i] {
+			tmp := pg.playground[i][j]
+			if CONTENT(tmp) == HEAD || CONTENT(tmp) == TAIL {
+				pg.playground[i][j] = int(EMPTY)
+			}
+		}
+	}
+}
+
+func (pg *playgroundImpl) GetContent(x, y int) CONTENT {
+	return CONTENT(pg.playground[x][y])
+}
+
 func (pg *playgroundImpl) Print() {
 	for i := range pg.playground {
 		for j := range pg.playground[i] {
@@ -61,7 +91,7 @@ func (pg *playgroundImpl) Print() {
 			case int(BORDER):
 				print(" #")
 			case int(HEAD):
-				print(" o")
+				print(" O")
 			case int(TAIL):
 				print(" +")
 			case int(FOOD):
