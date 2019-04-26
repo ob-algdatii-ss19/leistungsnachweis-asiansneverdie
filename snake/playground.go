@@ -1,5 +1,7 @@
 package snake
 
+import "math/rand"
+
 type CONTENT int
 
 const (
@@ -103,4 +105,15 @@ func (pg *playgroundImpl) Print() {
 		print("\n")
 	}
 	print("\n")
+}
+
+func (pg *playgroundImpl) setRandomFood() {
+	x := rand.Intn(len(pg.playground) - 3) + 1;
+	y := rand.Intn(len(pg.playground[0]) - 3) + 1;
+	for {
+		if CONTENT(pg.playground[x][y]) == EMPTY {
+			CONTENT(pg.playground[x][y]) = FOOD;
+		}
+		return
+	}
 }
