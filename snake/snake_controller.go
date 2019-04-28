@@ -36,8 +36,9 @@ func (sc *SimpleSnakeController) moveSnake() {
 	sc.setNewHead(RIGHT)
 }
 
-func (sc *SimpleSnakeController) addLastTail() {
-
+func (sc *SimpleSnakeController) addTail() Snake {
+	sc.Snake = NewSnake(sc.GetSnake().len + 1)
+	return sc.Snake
 }
 
 //set the second last tail to nil
