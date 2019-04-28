@@ -1,6 +1,8 @@
 package snake
 
-import "math/rand"
+import (
+	"math/rand"
+)
 
 type CONTENT int
 
@@ -16,6 +18,8 @@ type Playground interface {
 	CreateEmptyPlayground(height, width int)
 	CreateOuterBorders()
 	CreateSnake(snake Snake)
+	setStartFood()
+	setRandomFood()
 	Print()
 	DeleteSnake()
 	GetContent(x, y int) CONTENT
@@ -112,8 +116,12 @@ func (pg *playgroundImpl) setRandomFood() {
 	y := rand.Intn(len(pg.playground[0]) - 3) + 1;
 	for {
 		if CONTENT(pg.playground[x][y]) == EMPTY {
-			CONTENT(pg.playground[x][y]) = FOOD;
+			pg.playground[x][y] = int(FOOD);
 		}
 		return
 	}
+}
+
+func (pg *playgroundImpl) setStartFood() {
+	pg.playground[5][5] = int(FOOD);
 }

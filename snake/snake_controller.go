@@ -36,6 +36,10 @@ func (sc *SimpleSnakeController) moveSnake() {
 	sc.setNewHead(RIGHT)
 }
 
+func (sc *SimpleSnakeController) addLastTail() {
+
+}
+
 //set the second last tail to nil
 func (sc *SimpleSnakeController) setLastTail() {
 	first := sc.Snake.Head
