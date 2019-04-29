@@ -63,13 +63,15 @@ func (pg *playgroundImpl) CreateOuterBorders() {
 
 func (pg *playgroundImpl) CreateSnake(snake Snake) {
 	part := snake.Head
-	pg.playground[part.x][part.y] = int(HEAD)
+	// Draw Head
+	pg.playground[part.y][part.x] = int(HEAD)
+	// Draw Tail
 	for {
 		part = part.next
 		if part == nil {
 			break
 		}
-		pg.playground[part.x][part.y] = int(TAIL)
+		pg.playground[part.y][part.x] = int(TAIL)
 	}
 }
 
@@ -85,7 +87,7 @@ func (pg *playgroundImpl) DeleteSnake() {
 }
 
 func (pg *playgroundImpl) GetContent(x, y int) CONTENT {
-	return CONTENT(pg.playground[x][y])
+	return CONTENT(pg.playground[y][x])
 }
 
 func (pg *playgroundImpl) Print() {
@@ -115,8 +117,8 @@ func (pg *playgroundImpl) setRandomFood() {
 	x := rand.Intn(len(pg.playground) - 3) + 1;
 	y := rand.Intn(len(pg.playground[0]) - 3) + 1;
 	for {
-		if CONTENT(pg.playground[x][y]) == EMPTY {
-			pg.playground[x][y] = int(FOOD);
+		if CONTENT(pg.playground[y][x]) == EMPTY {
+			pg.playground[y][x] = int(FOOD);
 		}
 		return
 	}

@@ -9,7 +9,8 @@ func main() {
 	playground.CreateEmptyPlayground(40, 30)
 	playground.CreateOuterBorders()
 	s := snake.NewSnake(4)
-	snakeController := snake.NewSnakeController(&playground, s)
+	playground.CreateSnake(s)
+	snakeController := snake.NewSnakeController(playground, s)
 	//Speed in MillieSeconds
 	gameController := snake.NewPGController(playground, snakeController, 1000)
 
