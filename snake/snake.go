@@ -18,8 +18,8 @@ func NewSnake(len int) Snake {
 	snake.len = len
 
 	for i := len + 1; i > 1; i-- {
-		tmp.x = 1
-		tmp.y = i
+		tmp.x = i
+		tmp.y = 1
 		tmp2 := new(SPart)
 		tmp.next = tmp2
 		tmp = tmp2
