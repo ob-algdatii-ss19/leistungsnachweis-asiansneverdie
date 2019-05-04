@@ -2,6 +2,7 @@ package snake
 
 import (
 	"math/rand"
+	"time"
 )
 
 type CONTENT int
@@ -114,6 +115,7 @@ func (pg *playgroundImpl) Print() {
 }
 
 func (pg *playgroundImpl) setRandomFood() {
+	rand.Seed(time.Now().UnixNano())
 	x := rand.Intn(len(pg.playground) - 3) + 1;
 	y := rand.Intn(len(pg.playground[0]) - 3) + 1;
 	for {
