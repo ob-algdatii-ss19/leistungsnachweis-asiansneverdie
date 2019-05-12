@@ -6,6 +6,7 @@ type SController interface {
 
 	//returns the snake
 	GetSnake() Snake
+	addTail() Snake
 }
 
 type PlayGroundController interface {

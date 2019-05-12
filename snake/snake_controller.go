@@ -10,11 +10,11 @@ const (
 )
 
 type SimpleSnakeController struct {
-	pg    *Playground
+	pg    Playground
 	Snake Snake
 }
 
-func NewSnakeController(pg *Playground, snake Snake) SController {
+func NewSnakeController(pg Playground, snake Snake) SController {
 	sc := new(SimpleSnakeController)
 	sc.pg = pg
 	sc.Snake = snake
@@ -32,8 +32,18 @@ func (sc *SimpleSnakeController) GetSnake() Snake {
 }
 
 func (sc *SimpleSnakeController) moveSnake() {
-	sc.setLastTail()
-	sc.setNewHead(RIGHT)
+	dir := DOWN
+
+	// if snake got food dont delete the last tail
+	if sc.getNextPGField(dir) != FOOD {
+		sc.setLastTail()
+	}
+	sc.setNewHead(dir)
+}
+
+func (sc *SimpleSnakeController) addTail() Snake {
+	sc.Snake = NewSnake(sc.GetSnake().len + 1)
+	return sc.Snake
 }
 
 //set the second last tail to nil
@@ -52,22 +62,30 @@ func (sc *SimpleSnakeController) setLastTail() {
 
 func (sc *SimpleSnakeController) setNewHead(dir DIRECTION) {
 	newHead := new(SPart)
+	newHead.x, newHead.y = sc.getNextSnakeField(dir)
+	newHead.next = sc.Snake.Head
+	sc.Snake.Head = newHead
+}
+
+func (sc *SimpleSnakeController) getNextPGField(dir DIRECTION) CONTENT {
+	x, y := sc.getNextSnakeField(dir)
+	return sc.pg.GetContent(x, y)
+}
+
+func (sc *SimpleSnakeController) getNextSnakeField(dir DIRECTION) (int, int) {
+	s := sc.GetSnake().Head
+	x, y := s.x, s.y
 	switch dir {
 	case UP:
-		newHead.x = sc.Snake.Head.x
-		newHead.y = sc.Snake.Head.y - 1
+		y = y-1
 	case DOWN:
-		newHead.x = sc.Snake.Head.x
-		newHead.y = sc.Snake.Head.y + 1
-	case LEFT:
-		newHead.x = sc.Snake.Head.x - 1
-		newHead.y = sc.Snake.Head.y
+		y = y+1
 	case RIGHT:
-		newHead.x = sc.Snake.Head.x + 1
-		newHead.y = sc.Snake.Head.y
+		x = x+1
+	case LEFT:
+		x = x-1
 	default:
 		// do nothing
 	}
-	newHead.next = sc.Snake.Head
-	sc.Snake.Head = newHead
+	return x, y
 }

@@ -20,6 +20,7 @@ func NewPGController(pg Playground, sc SController, speed int) PlayGroundControl
 // Starts the Snake
 func (gc *gameController) Start() {
 	snake := gc.sc.GetSnake()
+	gc.pg.setStartFood()
 	for {
 		gc.pg.Print()
 		time.Sleep(time.Duration(gc.speed) * time.Millisecond)
@@ -27,6 +28,8 @@ func (gc *gameController) Start() {
 		snake = gc.sc.GetSnake()
 		if gc.pg.GetContent(snake.Head.x, snake.Head.y) == BORDER {
 			break
+		} else if gc.pg.GetContent(snake.Head.x, snake.Head.y) == FOOD {
+			gc.pg.setRandomFood()
 		}
 		gc.pg.DeleteSnake()
 		gc.pg.CreateSnake(snake)

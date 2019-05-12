@@ -1,5 +1,10 @@
 package snake
 
+import (
+	"math/rand"
+	"time"
+)
+
 type CONTENT int
 
 const (
@@ -14,6 +19,8 @@ type Playground interface {
 	CreateEmptyPlayground(height, width int)
 	CreateOuterBorders()
 	CreateSnake(snake Snake)
+	setStartFood()
+	setRandomFood()
 	Print()
 	DeleteSnake()
 	GetContent(x, y int) CONTENT
@@ -57,13 +64,15 @@ func (pg *playgroundImpl) CreateOuterBorders() {
 
 func (pg *playgroundImpl) CreateSnake(snake Snake) {
 	part := snake.Head
-	pg.playground[part.x][part.y] = int(HEAD)
+	// Draw Head
+	pg.playground[part.y][part.x] = int(HEAD)
+	// Draw Tail
 	for {
 		part = part.next
 		if part == nil {
 			break
 		}
-		pg.playground[part.x][part.y] = int(TAIL)
+		pg.playground[part.y][part.x] = int(TAIL)
 	}
 }
 
@@ -79,7 +88,7 @@ func (pg *playgroundImpl) DeleteSnake() {
 }
 
 func (pg *playgroundImpl) GetContent(x, y int) CONTENT {
-	return CONTENT(pg.playground[x][y])
+	return CONTENT(pg.playground[y][x])
 }
 
 func (pg *playgroundImpl) Print() {
@@ -103,4 +112,20 @@ func (pg *playgroundImpl) Print() {
 		print("\n")
 	}
 	print("\n")
+}
+
+func (pg *playgroundImpl) setRandomFood() {
+	rand.Seed(time.Now().UnixNano())
+	x := rand.Intn(len(pg.playground) - 3) + 1;
+	y := rand.Intn(len(pg.playground[0]) - 3) + 1;
+	for {
+		if CONTENT(pg.playground[y][x]) == EMPTY {
+			pg.playground[y][x] = int(FOOD);
+		}
+		return
+	}
+}
+
+func (pg *playgroundImpl) setStartFood() {
+	pg.playground[5][5] = int(FOOD);
 }
