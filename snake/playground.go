@@ -121,8 +121,9 @@ func (pg *playgroundImpl) setRandomFood() {
 	for {
 		if CONTENT(pg.playground[y][x]) == EMPTY {
 			pg.playground[y][x] = int(FOOD);
+			// TODO: give positions to snake
+			return
 		}
-		return
 	}
 }
 
