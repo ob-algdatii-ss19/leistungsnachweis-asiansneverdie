@@ -24,6 +24,9 @@ func NewSnakeController(pg Playground, snake Snake) SController {
 
 func (sc *SimpleSnakeController) NextStep() {
 	//Simple Implementatoin - Just move one step forwarads
+	//var x, y = sc.pg.GetFood()
+
+
 	sc.moveSnake()
 }
 
@@ -33,7 +36,16 @@ func (sc *SimpleSnakeController) GetSnake() Snake {
 
 func (sc *SimpleSnakeController) moveSnake() {
 	dir := DOWN
-
+	var x, y = sc.pg.GetFood()
+	if sc.Snake.Head.x < x {
+		dir = RIGHT
+	} else if sc.Snake.Head.x > x {
+		dir = LEFT
+	} else if sc.Snake.Head.y < y {
+		dir = DOWN
+	} else {
+		dir = UP
+	}
 	// if snake got food dont delete the last tail
 	if sc.getNextPGField(dir) != FOOD {
 		sc.setLastTail()
