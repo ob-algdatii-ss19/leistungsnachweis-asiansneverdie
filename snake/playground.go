@@ -15,6 +15,7 @@ const (
 	FOOD   CONTENT = 4
 )
 
+
 type Playground interface {
 	CreateEmptyPlayground(height, width int)
 	CreateOuterBorders()
@@ -24,10 +25,14 @@ type Playground interface {
 	Print()
 	DeleteSnake()
 	GetContent(x, y int) CONTENT
+	GetFood() (int, int)
+
 }
 
 type playgroundImpl struct {
 	playground [][]int
+	foodX int
+	foodY int
 }
 
 func NewPlayground() Playground {
@@ -116,14 +121,20 @@ func (pg *playgroundImpl) Print() {
 
 func (pg *playgroundImpl) setRandomFood() {
 	rand.Seed(time.Now().UnixNano())
-	x := rand.Intn(len(pg.playground) - 3) + 1;
-	y := rand.Intn(len(pg.playground[0]) - 3) + 1;
+	x := rand.Intn(len(pg.playground) - 3) + 1
+	y := rand.Intn(len(pg.playground[0]) - 3) + 1
 	for {
 		if CONTENT(pg.playground[y][x]) == EMPTY {
-			pg.playground[y][x] = int(FOOD);
+			pg.playground[y][x] = int(FOOD)
+			pg.foodX = x
+			pg.foodY = y
+			return
 		}
-		return
 	}
+}
+
+func (pg *playgroundImpl) GetFood() (int, int) {
+	return pg.foodX, pg.foodY
 }
 
 func (pg *playgroundImpl) setStartFood() {
