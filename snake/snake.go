@@ -7,9 +7,9 @@ type Snake struct {
 }
 
 type SPart struct {
-	x    int
-	y    int
-	next *SPart
+	X    int
+	Y    int
+	Next *SPart
 }
 
 func NewSnake(len int) Snake {
@@ -19,13 +19,13 @@ func NewSnake(len int) Snake {
 	snake.len = len
 	snake.LastDirection = RIGHT
 	for i := len + 1; i > 1; i-- {
-		tmp.x = i
-		tmp.y = 1
+		tmp.X = i
+		tmp.Y = 1
 		tmp2 := new(SPart)
-		tmp.next = tmp2
+		tmp.Next = tmp2
 		tmp = tmp2
 	}
-	tmp.x = 1
-	tmp.y = 1
+	tmp.X = 1
+	tmp.Y = 1
 	return snake
 }

@@ -1,6 +1,8 @@
-package playground
+package snake
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestSnake_CreatePlayground(t *testing.T) {
 	playground := NewPlayground()

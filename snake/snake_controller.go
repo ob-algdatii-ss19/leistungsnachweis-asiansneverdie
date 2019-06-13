@@ -39,11 +39,11 @@ func (sc *SimpleSnakeController) GetSnake() Snake {
 func (sc *SimpleSnakeController) moveSnake() {
 	dir := DOWN
 	var x, y = sc.pg.GetFood()
-	if sc.Snake.Head.x < x {
+	if sc.Snake.Head.X < x {
 		dir = RIGHT
-	} else if sc.Snake.Head.x > x {
+	} else if sc.Snake.Head.X > x {
 		dir = LEFT
-	} else if sc.Snake.Head.y < y {
+	} else if sc.Snake.Head.Y < y {
 		dir = DOWN
 	} else {
 		dir = UP
@@ -63,21 +63,21 @@ func (sc *SimpleSnakeController) addTail() Snake {
 //set the second last tail to nil
 func (sc *SimpleSnakeController) setLastTail() {
 	first := sc.Snake.Head
-	second := first.next
+	second := first.Next
 	for {
-		if second.next == nil {
+		if second.Next == nil {
 			break
 		}
 		first = second
-		second = second.next
+		second = second.Next
 	}
-	first.next = nil
+	first.Next = nil
 }
 
 func (sc *SimpleSnakeController) setNewHead(dir DIRECTION) {
 	newHead := new(SPart)
-	newHead.x, newHead.y = sc.getNextSnakeField(dir)
-	newHead.next = sc.Snake.Head
+	newHead.X, newHead.Y = sc.getNextSnakeField(dir)
+	newHead.Next = sc.Snake.Head
 	sc.Snake.Head = newHead
 }
 
@@ -88,7 +88,7 @@ func (sc *SimpleSnakeController) getNextPGField(dir DIRECTION) CONTENT {
 
 func (sc *SimpleSnakeController) getNextSnakeField(dir DIRECTION) (int, int) {
 	s := sc.GetSnake().Head
-	x, y := s.x, s.y
+	x, y := s.X, s.Y
 	switch dir {
 	case UP:
 		y = y-1

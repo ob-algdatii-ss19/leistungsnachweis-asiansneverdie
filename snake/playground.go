@@ -1,4 +1,4 @@
-package playground
+package snake
 
 import (
 	"math/rand"
@@ -70,14 +70,14 @@ func (pg *playgroundImpl) CreateOuterBorders() {
 func (pg *playgroundImpl) CreateSnake(snake Snake) {
 	part := snake.Head
 	// Draw Head
-	pg.playground[part.y][part.x] = int(HEAD)
+	pg.playground[part.Y][part.X] = int(HEAD)
 	// Draw Tail
 	for {
-		part = part.next
+		part = part.Next
 		if part == nil {
 			break
 		}
-		pg.playground[part.y][part.x] = int(TAIL)
+		pg.playground[part.Y][part.X] = int(TAIL)
 	}
 }
 
