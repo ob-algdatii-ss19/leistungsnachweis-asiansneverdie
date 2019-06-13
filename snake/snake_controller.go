@@ -29,9 +29,13 @@ func (sc *SimpleSnakeController) NextStep() {
 	fmt.Println(move)
 	switch len(move) {
 	case 0:
+		// TODO: End GAME
 	case 1:
+		// TODO: Move in move[0]
 	case 2:
+		// TODO: Decision... another switch case -> Algorithm
 	case 3:
+		// TODO: Move to FOOD
 	default:
 	}
 }
