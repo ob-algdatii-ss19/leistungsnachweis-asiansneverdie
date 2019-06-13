@@ -1,5 +1,7 @@
 package snake
 
+import Snake "github.com/ob-algdatii-ss19/leistungsnachweis-asiansneverdie/snake/snake"
+
 type SController interface {
 	//calculates the next Step of the Snake
 	NextStep()

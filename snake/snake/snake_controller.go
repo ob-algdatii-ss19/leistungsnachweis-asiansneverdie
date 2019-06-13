@@ -26,6 +26,8 @@ func (sc *SimpleSnakeController) NextStep() {
 	//Simple Implementatoin - Just move one step forwarads
 	//var x, y = sc.pg.GetFood()
 
+	// TODO: SWITCH CASE HERE (KI)
+
 
 	sc.moveSnake()
 }

@@ -1,4 +1,4 @@
-package snake
+package playground
 
 import "testing"
 
