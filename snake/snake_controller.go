@@ -1,5 +1,7 @@
 package snake
 
+import "fmt"
+
 type DIRECTION int
 
 const (
@@ -23,11 +25,19 @@ func NewSnakeController(pg Playground, snake Snake) SController {
 }
 
 func (sc *SimpleSnakeController) NextStep() {
-	//Simple Implementatoin - Just move one step forwarads
-	//var x, y = sc.pg.GetFood()
-
-
-	sc.moveSnake()
+	move := GetDirections(sc.pg.GetPlayGround())
+	fmt.Println(move)
+	switch len(move) {
+	case 0:
+		// TODO: End GAME
+	case 1:
+		// TODO: Move in move[0]
+	case 2:
+		// TODO: Decision... another switch case -> Algorithm
+	case 3:
+		// TODO: Move to FOOD
+	default:
+	}
 }
 
 func (sc *SimpleSnakeController) GetSnake() Snake {
@@ -37,11 +47,11 @@ func (sc *SimpleSnakeController) GetSnake() Snake {
 func (sc *SimpleSnakeController) moveSnake() {
 	dir := DOWN
 	var x, y = sc.pg.GetFood()
-	if sc.Snake.Head.x < x {
+	if sc.Snake.Head.X < x {
 		dir = RIGHT
-	} else if sc.Snake.Head.x > x {
+	} else if sc.Snake.Head.X > x {
 		dir = LEFT
-	} else if sc.Snake.Head.y < y {
+	} else if sc.Snake.Head.Y < y {
 		dir = DOWN
 	} else {
 		dir = UP
@@ -61,21 +71,21 @@ func (sc *SimpleSnakeController) addTail() Snake {
 //set the second last tail to nil
 func (sc *SimpleSnakeController) setLastTail() {
 	first := sc.Snake.Head
-	second := first.next
+	second := first.Next
 	for {
-		if second.next == nil {
+		if second.Next == nil {
 			break
 		}
 		first = second
-		second = second.next
+		second = second.Next
 	}
-	first.next = nil
+	first.Next = nil
 }
 
 func (sc *SimpleSnakeController) setNewHead(dir DIRECTION) {
 	newHead := new(SPart)
-	newHead.x, newHead.y = sc.getNextSnakeField(dir)
-	newHead.next = sc.Snake.Head
+	newHead.X, newHead.Y = sc.getNextSnakeField(dir)
+	newHead.Next = sc.Snake.Head
 	sc.Snake.Head = newHead
 }
 
@@ -86,20 +96,16 @@ func (sc *SimpleSnakeController) getNextPGField(dir DIRECTION) CONTENT {
 
 func (sc *SimpleSnakeController) getNextSnakeField(dir DIRECTION) (int, int) {
 	s := sc.GetSnake().Head
-	x, y := s.x, s.y
+	x, y := s.X, s.Y
 	switch dir {
 	case UP:
 		y = y-1
-		sc.Snake.LastDirection = UP
 	case DOWN:
 		y = y+1
-		sc.Snake.LastDirection = DOWN
 	case RIGHT:
 		x = x+1
-		sc.Snake.LastDirection = RIGHT
 	case LEFT:
 		x = x-1
-		sc.Snake.LastDirection = LEFT
 	default:
 		// do nothing
 	}

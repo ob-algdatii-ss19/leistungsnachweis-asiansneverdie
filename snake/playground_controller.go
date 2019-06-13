@@ -1,6 +1,8 @@
 package snake
 
-import "time"
+import (
+	"time"
+)
 
 type gameController struct {
 	pg    Playground
@@ -26,9 +28,9 @@ func (gc *gameController) Start() {
 		time.Sleep(time.Duration(gc.speed) * time.Millisecond)
 		gc.sc.NextStep()
 		snake = gc.sc.GetSnake()
-		if gc.pg.GetContent(snake.Head.x, snake.Head.y) == BORDER {
+		if gc.pg.GetContent(snake.Head.X, snake.Head.Y) == BORDER {
 			break
-		} else if gc.pg.GetContent(snake.Head.x, snake.Head.y) == FOOD {
+		} else if gc.pg.GetContent(snake.Head.X, snake.Head.Y) == FOOD {
 			gc.pg.setRandomFood()
 		}
 		gc.pg.DeleteSnake()
