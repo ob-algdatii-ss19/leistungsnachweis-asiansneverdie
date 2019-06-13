@@ -26,7 +26,7 @@ type Playground interface {
 	DeleteSnake()
 	GetContent(x, y int) CONTENT
 	GetFood() (int, int)
-
+	GetPlayGround() [][]int
 }
 
 type playgroundImpl struct {
@@ -39,6 +39,10 @@ func NewPlayground() Playground {
 	return &playgroundImpl{
 		playground: nil,
 	}
+}
+
+func (pg *playgroundImpl) GetPlayGround() [][]int {
+	return pg.playground
 }
 
 func (pg *playgroundImpl) CreateEmptyPlayground(height, width int) {

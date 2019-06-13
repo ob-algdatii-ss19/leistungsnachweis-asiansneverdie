@@ -1,5 +1,7 @@
 package snake
 
+import "fmt"
+
 type DIRECTION int
 
 const (
@@ -23,13 +25,15 @@ func NewSnakeController(pg Playground, snake Snake) SController {
 }
 
 func (sc *SimpleSnakeController) NextStep() {
-	//Simple Implementatoin - Just move one step forwarads
-	//var x, y = sc.pg.GetFood()
-
-	// TODO: SWITCH CASE HERE (KI)
-
-
-	sc.moveSnake()
+	move := GetDirections(sc.pg.GetPlayGround(), sc.Snake.LastDirection)
+	fmt.Println(move)
+	switch len(move) {
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	default:
+	}
 }
 
 func (sc *SimpleSnakeController) GetSnake() Snake {
