@@ -25,7 +25,7 @@ func NewSnakeController(pg Playground, snake Snake) SController {
 }
 
 func (sc *SimpleSnakeController) NextStep() {
-	move := GetDirections(sc.pg.GetPlayGround(), sc.Snake.LastDirection)
+	move := GetDirections(sc.pg.GetPlayGround())
 	fmt.Println(move)
 	switch len(move) {
 	case 0:
@@ -96,16 +96,12 @@ func (sc *SimpleSnakeController) getNextSnakeField(dir DIRECTION) (int, int) {
 	switch dir {
 	case UP:
 		y = y-1
-		sc.Snake.LastDirection = UP
 	case DOWN:
 		y = y+1
-		sc.Snake.LastDirection = DOWN
 	case RIGHT:
 		x = x+1
-		sc.Snake.LastDirection = RIGHT
 	case LEFT:
 		x = x-1
-		sc.Snake.LastDirection = LEFT
 	default:
 		// do nothing
 	}

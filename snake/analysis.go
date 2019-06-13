@@ -2,7 +2,7 @@ package snake
 
 import "fmt"
 
-func GetDirections(playground [][]int, lastDirection DIRECTION) []DIRECTION {
+func GetDirections(playground [][]int) []DIRECTION {
 	directions := []DIRECTION{UP, DOWN, LEFT, RIGHT}
 	x, y, ok := FindHead(playground)
 	if !ok {
@@ -10,21 +10,21 @@ func GetDirections(playground [][]int, lastDirection DIRECTION) []DIRECTION {
 	}
 	// Check UP
 	if playground[x][y-1] != int(EMPTY) {
-		directions = directions[1:]
+		directions = removeValueFromSlice(directions, UP)
 	}
 	// check DOWN
 	if playground[x][y+1] != int(EMPTY) {
-		directions = directions[1:]
+		directions = removeValueFromSlice(directions, DOWN)
 	}
 	// check LEFT
 	if playground[x-1][y] != int(EMPTY) {
-		directions = directions[1:]
+		directions = removeValueFromSlice(directions, LEFT)
 	}
 	// check RIGHT
 	if playground[x+1][y] != int(EMPTY) {
-		directions = directions[1:]
+		directions = removeValueFromSlice(directions, RIGHT)
 	}
-	return removeValueFromSlice(directions, lastDirection)
+	return directions
 }
 
 func FindHead(playground [][]int) (int, int, bool) {

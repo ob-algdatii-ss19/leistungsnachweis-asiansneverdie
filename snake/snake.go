@@ -3,7 +3,6 @@ package snake
 type Snake struct {
 	Head *SPart
 	len  int
-	LastDirection DIRECTION
 }
 
 type SPart struct {
@@ -17,7 +16,6 @@ func NewSnake(len int) Snake {
 	tmp := new(SPart)
 	snake.Head = tmp
 	snake.len = len
-	snake.LastDirection = RIGHT
 	for i := len + 1; i > 1; i-- {
 		tmp.X = i
 		tmp.Y = 1
