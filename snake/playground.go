@@ -125,8 +125,8 @@ func (pg *playgroundImpl) Print() {
 
 func (pg *playgroundImpl) setRandomFood() {
 	rand.Seed(time.Now().UnixNano())
-	x := rand.Intn(len(pg.playground) - 3) + 1
-	y := rand.Intn(len(pg.playground[0]) - 3) + 1
+	y := rand.Intn(len(pg.playground) - 3) + 1
+	x := rand.Intn(len(pg.playground[0]) - 3) + 1
 	for {
 		if CONTENT(pg.playground[y][x]) == EMPTY {
 			pg.playground[y][x] = int(FOOD)
@@ -143,4 +143,6 @@ func (pg *playgroundImpl) GetFood() (int, int) {
 
 func (pg *playgroundImpl) setStartFood() {
 	pg.playground[5][5] = int(FOOD);
+	pg.foodX = 5
+	pg.foodY = 5
 }
