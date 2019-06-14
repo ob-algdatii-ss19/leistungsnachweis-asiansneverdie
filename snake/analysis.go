@@ -9,19 +9,19 @@ func GetDirections(playground [][]int) []DIRECTION {
 		fmt.Println("Head not found")
 	}
 	// Check UP
-	if playground[x][y-1] != int(EMPTY) {
+	if playground[x][y-1] != int(EMPTY) && playground[x][y-1] != int(FOOD) {
 		directions = removeValueFromSlice(directions, UP)
 	}
 	// check DOWN
-	if playground[x][y+1] != int(EMPTY) {
+	if playground[x][y+1] != int(EMPTY) &&  playground[x][y+1] != int(FOOD) {
 		directions = removeValueFromSlice(directions, DOWN)
 	}
 	// check LEFT
-	if playground[x-1][y] != int(EMPTY) {
+	if playground[x-1][y] != int(EMPTY) && playground[x-1][y] != int(FOOD){
 		directions = removeValueFromSlice(directions, LEFT)
 	}
 	// check RIGHT
-	if playground[x+1][y] != int(EMPTY) {
+	if playground[x+1][y] != int(EMPTY) && playground[x+1][y] != int(FOOD) {
 		directions = removeValueFromSlice(directions, RIGHT)
 	}
 	return directions

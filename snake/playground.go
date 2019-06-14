@@ -1,6 +1,7 @@
 package snake
 
 import (
+	"fmt"
 	"math/rand"
 	"time"
 )
@@ -128,6 +129,7 @@ func (pg *playgroundImpl) setRandomFood() {
 	x := rand.Intn(len(pg.playground) - 3) + 1
 	y := rand.Intn(len(pg.playground[0]) - 3) + 1
 	for {
+		fmt.Println(y,x)
 		if CONTENT(pg.playground[y][x]) == EMPTY {
 			pg.playground[y][x] = int(FOOD)
 			pg.foodX = x
