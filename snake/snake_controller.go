@@ -34,7 +34,7 @@ func (sc *SimpleSnakeController) NextStep() {
 	case 2:
 		// TODO: Decision... another switch case -> Algorithm
 		sc.setLastTail()
-		sc.setNewHead(DOWN)
+		sc.setNewHead(move[0])
 	case 3:
 		// move to food
 		sc.moveSnakeToFood()
