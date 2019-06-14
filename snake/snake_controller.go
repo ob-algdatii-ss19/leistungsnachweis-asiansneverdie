@@ -34,8 +34,11 @@ func (sc *SimpleSnakeController) NextStep() {
 		// TODO: Move in move[0]
 	case 2:
 		// TODO: Decision... another switch case -> Algorithm
+		sc.setLastTail()
+		sc.setNewHead(DOWN)
 	case 3:
-		// TODO: Move to FOOD
+		fmt.Println(sc.pg.GetFood())
+		sc.moveSnakeToFood()
 	default:
 	}
 }
@@ -44,7 +47,7 @@ func (sc *SimpleSnakeController) GetSnake() Snake {
 	return sc.Snake
 }
 
-func (sc *SimpleSnakeController) moveSnake() {
+func (sc *SimpleSnakeController) moveSnakeToFood() {
 	dir := DOWN
 	var x, y = sc.pg.GetFood()
 	if sc.Snake.Head.X < x {
@@ -57,9 +60,11 @@ func (sc *SimpleSnakeController) moveSnake() {
 		dir = UP
 	}
 	// if snake got food dont delete the last tail
+	// TODO: doesn't work
 	if sc.getNextPGField(dir) != FOOD {
-		sc.setLastTail()
+	sc.setLastTail()
 	}
+
 	sc.setNewHead(dir)
 }
 
