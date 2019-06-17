@@ -12,7 +12,7 @@ func main() {
 	playground.CreateSnake(s)
 	snakeController := snake.NewSnakeController(playground, s)
 	//Speed in MillieSeconds
-	gameController := snake.NewPGController(playground, snakeController, 200)
+	gameController := snake.NewPGController(playground, snakeController, 50)
 
 	gameController.Start()
 
