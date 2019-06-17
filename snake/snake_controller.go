@@ -37,7 +37,7 @@ func (sc *SimpleSnakeController) NextStep() {
 		sc.setNewHead(move[0])
 	case 3:
 		// move to food
-		sc.moveSnakeToFood()
+		sc.moveSnakeToFood(move)
 	default:
 	}
 }
@@ -46,23 +46,34 @@ func (sc *SimpleSnakeController) GetSnake() Snake {
 	return sc.Snake
 }
 
-func (sc *SimpleSnakeController) moveSnakeToFood() {
-	dir := DOWN
+func (sc *SimpleSnakeController) moveSnakeToFood(move []DIRECTION) {
+	dir := move[0]
 	var x, y = sc.pg.GetFood()
-	if sc.Snake.Head.X < x {
+	if sc.Snake.Head.X < x && contains(move, RIGHT) {
 		dir = RIGHT
-	} else if sc.Snake.Head.X > x {
+	} else if sc.Snake.Head.X > x && contains(move, LEFT) {
 		dir = LEFT
-	} else if sc.Snake.Head.Y < y {
+	} else if sc.Snake.Head.Y < y && contains(move, DOWN) {
 		dir = DOWN
-	} else {
+	} else if sc.Snake.Head.Y > y && contains(move, UP) {
 		dir = UP
+	} else {
+		dir = move[0]
 	}
 	// if snake got food dont delete the last tail
 	if sc.getNextPGField(dir) != FOOD {
 		sc.setLastTail()
 	}
 	sc.setNewHead(dir)
+}
+
+func contains(s []DIRECTION, e DIRECTION) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
 }
 
 func (sc *SimpleSnakeController) addTail() Snake {
