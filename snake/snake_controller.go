@@ -39,6 +39,8 @@ func (sc *SimpleSnakeController) NextStep() {
 		sc.setLastTail()
 		sc.setNewHead(move[0])
 	case 2:
+		// TODO: Decision... another switch case -> Algorithm
+		sc.moveSnakeToFood(move)
 		//copyController := copySimpleSnakeController(sc)
 		copied := deepcopy.Copy(sc)
 		copyController := copied.(*SimpleSnakeController)
@@ -78,10 +80,8 @@ func (sc *SimpleSnakeController) moveSnakeToFood(move []DIRECTION) {
 		dir = LEFT
 	} else if sc.Snake.Head.Y < y && contains(move, DOWN) {
 		dir = DOWN
-	} else if sc.Snake.Head.Y > y && contains(move, UP) {
+	} else if contains(move, UP) {
 		dir = UP
-	} else {
-		dir = move[0]
 	}
 	// if snake got food dont delete the last tail
 	if sc.getNextPGField(dir) != FOOD {
