@@ -71,15 +71,17 @@ func (sc *SimpleSnakeController) GetSnake() Snake {
 
 func (sc *SimpleSnakeController) moveSnakeToFood(move []DIRECTION) {
 	dir := move[0]
-	var x, y = sc.Pg.GetFood()
+	var x, y = sc.pg.GetFood()
 	if sc.Snake.Head.X < x && contains(move, RIGHT) {
 		dir = RIGHT
 	} else if sc.Snake.Head.X > x && contains(move, LEFT) {
 		dir = LEFT
 	} else if sc.Snake.Head.Y < y && contains(move, DOWN) {
 		dir = DOWN
-	} else if contains(move, UP) {
+	} else if sc.Snake.Head.Y > y && contains(move, UP) {
 		dir = UP
+	} else {
+		dir = move[0]
 	}
 	// if snake got food dont delete the last tail
 	if sc.getNextPGField(dir) != FOOD {
@@ -97,23 +99,6 @@ func contains(s []DIRECTION, e DIRECTION) bool {
 		}
 	}
 	return false
-}
-
-func copySimpleSnakeController(sc *SimpleSnakeController) *SimpleSnakeController {
-	result := new(SimpleSnakeController)
-	result.Pg = sc.Pg
-	result.Snake = NewSnake(sc.Snake.len)
-	result.Snake.Head = new(SPart)
-	*result.Snake.Head = *sc.Snake.Head
-	rTail := result.Snake.Head.Next
-	sTail := sc.Snake.Head.Next
-	for sTail != nil {
-		rTail = new(SPart)
-		*rTail = *sTail
-		sTail = sTail.Next
-		rTail = rTail.Next
-	}
-	return result
 }
 
 func (sc *SimpleSnakeController) addTail() Snake {
