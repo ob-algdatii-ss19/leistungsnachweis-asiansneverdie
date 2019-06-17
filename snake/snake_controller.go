@@ -26,15 +26,15 @@ func (sc *SimpleSnakeController) NextStep() {
 	move := GetDirections(sc.pg.GetPlayGround())
 	switch len(move) {
 	case 0:
-		// TODO: End GAME
+		// Default, End Game
+		sc.setNewHead(RIGHT)
 	case 1:
 		// move in the one direction
 		sc.setLastTail()
 		sc.setNewHead(move[0])
 	case 2:
 		// TODO: Decision... another switch case -> Algorithm
-		sc.setLastTail()
-		sc.setNewHead(move[0])
+		sc.moveSnakeToFood(move)
 	case 3:
 		// move to food
 		sc.moveSnakeToFood(move)
@@ -55,10 +55,8 @@ func (sc *SimpleSnakeController) moveSnakeToFood(move []DIRECTION) {
 		dir = LEFT
 	} else if sc.Snake.Head.Y < y && contains(move, DOWN) {
 		dir = DOWN
-	} else if sc.Snake.Head.Y > y && contains(move, UP) {
+	} else if contains(move, UP) {
 		dir = UP
-	} else {
-		dir = move[0]
 	}
 	// if snake got food dont delete the last tail
 	if sc.getNextPGField(dir) != FOOD {
