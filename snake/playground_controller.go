@@ -24,7 +24,6 @@ func (gc *gameController) Start() {
 	snake := gc.sc.GetSnake()
 	gc.pg.setStartFood()
 	for {
-		// TODO: it will fail here, FIX!!!
 		gc.pg.Print()
 		time.Sleep(time.Duration(gc.speed) * time.Millisecond)
 		gc.sc.NextStep()

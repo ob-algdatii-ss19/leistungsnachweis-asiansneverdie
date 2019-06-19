@@ -39,26 +39,18 @@ func (sc *SimpleSnakeController) NextStep() {
 		sc.setLastTail()
 		sc.setNewHead(move[0])
 	case 2:
-		// TODO: Decision... another switch case -> Algorithm
-		sc.moveSnakeToFood(move)
-		//copyController := copySimpleSnakeController(sc)
-		copied := deepcopy.Copy(sc)
-		copyController := copied.(*SimpleSnakeController)
-		err := copier.Copy(copyController.Pg, sc.Pg)
-		if err != nil {
-			fmt.Println("Error occurred while copying")
-		}
-		duplicate := copyController.Pg.CopyPlayGround(copyController.Pg.GetPlayGround())
-		copyController.Snake.len = sc.Snake.len
-		copyController.Snake.LastDirection = sc.Snake.LastDirection
-		nextStep := copyController.GetNextMovableFoodDirection(move)
-		nextArray := []DIRECTION{nextStep}
-		if Simulate(copyController, nextArray, 0, copyController.Snake.len) {
-			sc.Pg.SetPlayGround(duplicate)
-			sc.moveSnakeToFood(nextArray)
+		if sc.getNextPGField(sc.Snake.LastDirection) == TAIL {
+			// simulate to Food
+			// TODO: which directions is to FOOD?
+			if Simulate(sc.Pg, sc.Snake.len, sc.Snake) {
+				// TODO: GO TO FOOD
+				sc.moveSnakeToFood(move)
+			} else {
+				// TODO: MOVE OTHER DIRECTION
+				sc.moveSnakeToFood(move)
+			}
 		} else {
-			sc.Pg.SetPlayGround(duplicate)
-			sc.moveSnakeToFood(Remove(move, nextStep))
+			sc.moveSnakeToFood(move)
 		}
 	case 3:
 		// move to food
