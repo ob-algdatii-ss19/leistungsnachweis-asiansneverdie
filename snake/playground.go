@@ -128,6 +128,8 @@ func (pg *playgroundImpl) setRandomFood() {
 	y := rand.Intn(len(pg.playground) - 3) + 1
 	x := rand.Intn(len(pg.playground[0]) - 3) + 1
 	for {
+		y = rand.Intn(len(pg.playground) - 3) + 1
+		x = rand.Intn(len(pg.playground[0]) - 3) + 1
 		if CONTENT(pg.playground[y][x]) == EMPTY {
 			pg.playground[y][x] = int(FOOD)
 			pg.foodX = x
