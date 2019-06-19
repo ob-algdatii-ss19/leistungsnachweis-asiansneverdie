@@ -17,20 +17,20 @@ const (
 )
 
 type SimpleSnakeController struct {
-	pg    Playground
+	Pg    Playground
 	Snake Snake
 }
 
 func NewSnakeController(pg Playground, snake Snake) SController {
 	sc := new(SimpleSnakeController)
-	sc.pg = pg
+	sc.Pg = pg
 	sc.Snake = snake
 
 	return sc
 }
 
 func (sc *SimpleSnakeController) NextStep() {
-	move := GetDirections(sc.pg.GetPlayGround())
+	move := GetDirections(sc.Pg.GetPlayGround())
 	switch len(move) {
 	case 0:
 		// Default, End Game
@@ -128,7 +128,7 @@ func (sc *SimpleSnakeController) setNewHead(dir DIRECTION) {
 
 func (sc *SimpleSnakeController) getNextPGField(dir DIRECTION) CONTENT {
 	x, y := sc.getNextSnakeField(dir)
-	return sc.pg.GetContent(x, y)
+	return sc.Pg.GetContent(x, y)
 }
 
 func (sc *SimpleSnakeController) getNextSnakeField(dir DIRECTION) (int, int) {
