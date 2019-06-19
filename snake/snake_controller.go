@@ -41,13 +41,11 @@ func (sc *SimpleSnakeController) NextStep() {
 	case 2:
 		if sc.getNextPGField(sc.Snake.LastDirection) == TAIL {
 			// simulate to Food
-			// TODO: which directions is to FOOD?
 			if Simulate(sc.Pg, sc.Snake.len, sc.Snake) {
-				// TODO: GO TO FOOD
 				sc.moveSnakeToFood(move)
 			} else {
 				// TODO: MOVE OTHER DIRECTION
-				sc.moveSnakeToFood(move)
+
 			}
 		} else {
 			sc.moveSnakeToFood(move)
