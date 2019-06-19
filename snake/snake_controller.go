@@ -73,7 +73,7 @@ func (sc *SimpleSnakeController) GetSnake() Snake {
 
 func (sc *SimpleSnakeController) moveSnakeToFood(move []DIRECTION) {
 	dir := move[0]
-	var x, y = sc.pg.GetFood()
+	var x, y = sc.Pg.GetFood()
 	if sc.Snake.Head.X < x && contains(move, RIGHT) {
 		dir = RIGHT
 	} else if sc.Snake.Head.X > x && contains(move, LEFT) {
