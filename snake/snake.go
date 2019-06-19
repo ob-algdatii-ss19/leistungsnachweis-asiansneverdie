@@ -1,8 +1,8 @@
 package snake
 
 type Snake struct {
-	Head          *SPart
-	len           int
+	Head *SPart
+	len  int
 	LastDirection DIRECTION
 }
 
