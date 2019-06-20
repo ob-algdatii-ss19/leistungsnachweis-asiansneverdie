@@ -156,7 +156,7 @@ func (pg *playgroundImpl) GetFood() (int, int) {
 }
 
 func (pg *playgroundImpl) setStartFood() {
-	pg.playground[5][1] = int(FOOD)
-	pg.foodX = 1
+	pg.playground[5][5] = int(FOOD)
+	pg.foodX = 5
 	pg.foodY = 5
 }
