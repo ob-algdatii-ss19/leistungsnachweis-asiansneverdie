@@ -6,7 +6,7 @@ import (
 
 func main() {
 	playground := snake.NewPlayground()
-	playground.CreateEmptyPlayground(40, 30)
+	playground.CreateEmptyPlayground(20, 10)
 	playground.CreateOuterBorders()
 	s := snake.NewSnake(4)
 	playground.CreateSnake(s)
