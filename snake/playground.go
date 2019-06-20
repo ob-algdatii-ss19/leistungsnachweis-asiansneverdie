@@ -15,7 +15,6 @@ const (
 	FOOD   CONTENT = 4
 )
 
-
 type Playground interface {
 	CreateEmptyPlayground(height, width int)
 	CreateOuterBorders()
@@ -27,12 +26,27 @@ type Playground interface {
 	GetContent(x, y int) CONTENT
 	GetFood() (int, int)
 	GetPlayGround() [][]int
+	SetPlayGround(field [][]int)
+	CopyPlayGround(field [][]int) [][]int
 }
 
 type playgroundImpl struct {
 	playground [][]int
-	foodX int
-	foodY int
+	foodX      int
+	foodY      int
+}
+
+func (pg *playgroundImpl) CopyPlayGround(field [][]int) [][]int {
+	duplicate := make([][]int, len(field))
+	for i := range field {
+		duplicate[i] = make([]int, len(field[i]))
+		copy(duplicate[i], field[i])
+	}
+	return duplicate
+}
+
+func (pg *playgroundImpl) SetPlayGround(field [][]int) {
+	pg.playground = field
 }
 
 func NewPlayground() Playground {
@@ -125,11 +139,11 @@ func (pg *playgroundImpl) Print() {
 
 func (pg *playgroundImpl) setRandomFood() {
 	rand.Seed(time.Now().UnixNano())
-	y := rand.Intn(len(pg.playground) - 3) + 1
-	x := rand.Intn(len(pg.playground[0]) - 3) + 1
+	y := rand.Intn(len(pg.playground)-3) + 1
+	x := rand.Intn(len(pg.playground[0])-3) + 1
 	for {
-		y = rand.Intn(len(pg.playground) - 3) + 1
-		x = rand.Intn(len(pg.playground[0]) - 3) + 1
+		y = rand.Intn(len(pg.playground)-3) + 1
+		x = rand.Intn(len(pg.playground[0])-3) + 1
 		if CONTENT(pg.playground[y][x]) == EMPTY {
 			pg.playground[y][x] = int(FOOD)
 			pg.foodX = x
@@ -144,7 +158,7 @@ func (pg *playgroundImpl) GetFood() (int, int) {
 }
 
 func (pg *playgroundImpl) setStartFood() {
-	pg.playground[5][5] = int(FOOD);
+	pg.playground[5][5] = int(FOOD)
 	pg.foodX = 5
 	pg.foodY = 5
 }
