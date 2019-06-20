@@ -55,7 +55,7 @@ func (sc *SimpleSnakeController) NextStep() {
 			sc.Pg.SetPlayGround(duplicate)
 			sc.moveSnakeToFood(nextArray)
 		} else {
-			sc.moveSnakeToFood(move)
+			sc.moveSnakeToFood(move[1:])
 		}
 	case 3:
 		// move to food
