@@ -39,16 +39,17 @@ func (sc *SimpleSnakeController) NextStep() {
 		sc.setLastTail()
 		sc.setNewHead(move[0])
 	case 2:
-		if sc.getNextPGField(sc.Snake.LastDirection) == TAIL {
-			// simulate to Food
-			if Simulate(sc.Pg, sc.Snake.len, sc.Snake) {
-				sc.moveSnakeToFood(move)
-			} else {
-				// TODO: MOVE OTHER DIRECTION
-
-			}
+		//copyController := copySimpleSnakeController(sc)
+		copier := deepcopy.Copy(sc)
+		copyController := copier.(*SimpleSnakeController)
+		pg := deepcopy.Copy(sc.Pg)
+		copyController.Pg = pg.(Playground)
+		copyController.Snake.len = sc.Snake.len
+		copyController.Snake.LastDirection = sc.Snake.LastDirection
+		if Simulate(copyController, move[:1], copyController.Snake.len) {
+			sc.moveSnakeToFood(move[:1])
 		} else {
-			sc.moveSnakeToFood(move)
+			sc.moveSnakeToFood(move[1:])
 		}
 	case 3:
 		// move to food
@@ -91,6 +92,23 @@ func contains(s []DIRECTION, e DIRECTION) bool {
 	return false
 }
 
+func copySimpleSnakeController(sc *SimpleSnakeController) *SimpleSnakeController {
+	result := new(SimpleSnakeController)
+	result.Pg = sc.Pg
+	result.Snake = NewSnake(sc.Snake.len)
+	result.Snake.Head = new(SPart)
+	*result.Snake.Head = *sc.Snake.Head
+	rTail := result.Snake.Head.Next
+	sTail := sc.Snake.Head.Next
+	for sTail != nil {
+		rTail = new(SPart)
+		*rTail = *sTail
+		sTail = sTail.Next
+		rTail = rTail.Next
+	}
+	return result
+}
+
 func (sc *SimpleSnakeController) addTail() Snake {
 	sc.Snake = NewSnake(sc.GetSnake().len + 1)
 	return sc.Snake
@@ -127,16 +145,16 @@ func (sc *SimpleSnakeController) getNextSnakeField(dir DIRECTION) (int, int) {
 	x, y := s.X, s.Y
 	switch dir {
 	case UP:
-		y = y-1
+		y = y - 1
 		sc.Snake.LastDirection = UP
 	case DOWN:
-		y = y+1
+		y = y + 1
 		sc.Snake.LastDirection = DOWN
 	case RIGHT:
-		x = x+1
+		x = x + 1
 		sc.Snake.LastDirection = RIGHT
 	case LEFT:
-		x = x-1
+		x = x - 1
 		sc.Snake.LastDirection = LEFT
 	default:
 		// do nothing
