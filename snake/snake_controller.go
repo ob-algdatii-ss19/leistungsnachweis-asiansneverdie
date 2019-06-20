@@ -41,23 +41,16 @@ func (sc *SimpleSnakeController) NextStep() {
 		sc.setNewHead(move[0])
 	case 2:
 		//copyController := copySimpleSnakeController(sc)
-		copied := deepcopy.Copy(sc)
-		copyController := copied.(*SimpleSnakeController)
-		err := copier.Copy(copyController.Pg, sc.Pg)
-		if err != nil {
-			fmt.Println("Error occurred while copying")
-		}
-		duplicate := copyController.Pg.CopyPlayGround(copyController.Pg.GetPlayGround())
+		copier := deepcopy.Copy(sc)
+		copyController := copier.(*SimpleSnakeController)
+		pg := deepcopy.Copy(sc.Pg)
+		copyController.Pg = pg.(Playground)
 		copyController.Snake.len = sc.Snake.len
 		copyController.Snake.LastDirection = sc.Snake.LastDirection
-		nextStep := copyController.GetNextMovableFoodDirection(move)
-		nextArray := []DIRECTION{nextStep}
-		if Simulate(copyController, nextArray, 0, copyController.Snake.len) {
-			sc.Pg.SetPlayGround(duplicate)
-			sc.moveSnakeToFood(nextArray)
+		if Simulate(copyController, move[:1], copyController.Snake.len) {
+			sc.moveSnakeToFood(move[:1])
 		} else {
-			sc.Pg.SetPlayGround(duplicate)
-			sc.moveSnakeToFood(Remove(move, nextStep))
+			sc.moveSnakeToFood(move[1:])
 		}
 	case 3:
 		// move to food
@@ -99,6 +92,23 @@ func contains(s []DIRECTION, e DIRECTION) bool {
 		}
 	}
 	return false
+}
+
+func copySimpleSnakeController(sc *SimpleSnakeController) *SimpleSnakeController {
+	result := new(SimpleSnakeController)
+	result.Pg = sc.Pg
+	result.Snake = NewSnake(sc.Snake.len)
+	result.Snake.Head = new(SPart)
+	*result.Snake.Head = *sc.Snake.Head
+	rTail := result.Snake.Head.Next
+	sTail := sc.Snake.Head.Next
+	for sTail != nil {
+		rTail = new(SPart)
+		*rTail = *sTail
+		sTail = sTail.Next
+		rTail = rTail.Next
+	}
+	return result
 }
 
 func (sc *SimpleSnakeController) addTail() Snake {
