@@ -40,15 +40,20 @@ func (sc *SimpleSnakeController) NextStep() {
 		sc.setNewHead(move[0])
 	case 2:
 		//copyController := copySimpleSnakeController(sc)
-		copier := deepcopy.Copy(sc)
-		copyController := copier.(*SimpleSnakeController)
-		pg := deepcopy.Copy(sc.Pg)
-		copyController.Pg = pg.(Playground)
+		copied := deepcopy.Copy(sc)
+		copyController := copied.(*SimpleSnakeController)
+		err := copier.Copy(copyController.Pg, sc.Pg)
+		if err != nil {
+			fmt.Println("Error occurred while copying")
+		}
+		duplicate := copyController.Pg.CopyPlayGround(copyController.Pg.GetPlayGround())
 		copyController.Snake.len = sc.Snake.len
 		copyController.Snake.LastDirection = sc.Snake.LastDirection
-		if Simulate(copyController, move[:1], copyController.Snake.len) {
+		if Simulate(copyController, move[:1], 0, copyController.Snake.len) {
+			sc.Pg.SetPlayGround(duplicate)
 			sc.moveSnakeToFood(move[:1])
 		} else {
+			sc.Pg.SetPlayGround(duplicate)
 			sc.moveSnakeToFood(move[1:])
 		}
 	case 3:

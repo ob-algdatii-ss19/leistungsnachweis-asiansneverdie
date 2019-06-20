@@ -6,6 +6,7 @@ import (
 	"github.com/mohae/deepcopy"
 )
 
+// TODO: correct input
 func Simulate(sc *SimpleSnakeController, move []DIRECTION, depth, snakeLength int) bool {
 	if len(move) < 1 {
 		return false
@@ -19,14 +20,12 @@ func Simulate(sc *SimpleSnakeController, move []DIRECTION, depth, snakeLength in
 		duplicate := copyController.Pg.CopyPlayGround(copyController.Pg.GetPlayGround())
 		copyController.Snake.len = sc.Snake.len
 		copyController.Snake.LastDirection = sc.Snake.LastDirection
-		nextStep := copyController.GetNextMovableFoodDirection(move)
-		nextArray := []DIRECTION{nextStep}
-		if Simulate(copyController, nextArray, depth+1, snakeLength) {
+		if Simulate(copyController, move[:1], depth+1, snakeLength) {
 			sc.Pg.SetPlayGround(duplicate)
-			sc.moveSnakeToFood(nextArray)
+			sc.moveSnakeToFood(move[:1])
 		} else {
 			sc.Pg.SetPlayGround(duplicate)
-			sc.moveSnakeToFood(Remove(move, nextStep))
+			sc.moveSnakeToFood(move[1:])
 		}
 	} else {
 		sc.moveSnakeToFood(move)
@@ -44,7 +43,7 @@ func Simulate(sc *SimpleSnakeController, move []DIRECTION, depth, snakeLength in
 	if snakeLength < 1 {
 		return true
 	} else {
-		return Simulate(sc, GetDirections(sc.Pg.GetPlayGround()), depth, snakeLength - 1)
+		return Simulate(sc, GetDirections(sc.Pg.GetPlayGround()), depth, snakeLength-1)
 	}
 }
 
