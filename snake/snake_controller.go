@@ -52,10 +52,10 @@ func (sc *SimpleSnakeController) NextStep() {
 		nextStep := copyController.GetNextMovableFoodDirection(move)
 		nextArray := []DIRECTION{nextStep}
 		if Simulate(copyController, nextArray, 0, copyController.Snake.len) {
-			sc.pg.SetPlayGround(duplicate)
+			sc.Pg.SetPlayGround(duplicate)
 			sc.moveSnakeToFood(nextArray)
 		} else {
-			sc.pg.SetPlayGround(duplicate)
+			sc.Pg.SetPlayGround(duplicate)
 			sc.moveSnakeToFood(Remove(move, nextStep))
 		}
 	case 3:
