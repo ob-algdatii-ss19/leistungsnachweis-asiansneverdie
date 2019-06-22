@@ -7,7 +7,6 @@ import (
 )
 
 func Simulate(sc *SimpleSnakeController, move []DIRECTION, depth, snakeLength int) bool {
-	fmt.Println(move)
 	if len(move) < 1 {
 		return false
 	} else if len(move) == 2 && depth < 3 {
