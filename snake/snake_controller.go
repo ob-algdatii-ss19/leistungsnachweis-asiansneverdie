@@ -99,7 +99,7 @@ func contains(s []DIRECTION, e DIRECTION) bool {
 	return false
 }
 
-func copySimpleSnakeController(sc *SimpleSnakeController) *SimpleSnakeController {
+/*func copySimpleSnakeController(sc *SimpleSnakeController) *SimpleSnakeController {
 	result := new(SimpleSnakeController)
 	result.Pg = sc.Pg
 	result.Snake = NewSnake(sc.Snake.len)
@@ -114,7 +114,7 @@ func copySimpleSnakeController(sc *SimpleSnakeController) *SimpleSnakeController
 		rTail = rTail.Next
 	}
 	return result
-}
+}*/
 
 func (sc *SimpleSnakeController) addTail() Snake {
 	sc.Snake = NewSnake(sc.GetSnake().len + 1)

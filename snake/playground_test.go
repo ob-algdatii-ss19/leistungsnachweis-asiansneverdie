@@ -141,5 +141,17 @@ func TestPlaygroundImpl_GetContent(t *testing.T) {
 	}
 }
 
+func TestPlaygroundImpl_PrintNoPanic(t *testing.T) {
+	defer func() {
+		if r := recover(); r != nil {
+			t.Errorf("the code did panic")
+		}
+	}()
+	playground := NewPlayground()
+	playground.CreateEmptyPlayground(20, 10)
+	playground.CreateOuterBorders()
+	playground.Print()
+}
+
 
 
