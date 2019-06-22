@@ -6,8 +6,8 @@ import (
 	"github.com/mohae/deepcopy"
 )
 
-// TODO: correct input
 func Simulate(sc *SimpleSnakeController, move []DIRECTION, depth, snakeLength int) bool {
+	fmt.Println(move)
 	if len(move) < 1 {
 		return false
 	} else if len(move) == 2 && depth < 3 {
@@ -20,14 +20,14 @@ func Simulate(sc *SimpleSnakeController, move []DIRECTION, depth, snakeLength in
 		duplicate := copyController.Pg.CopyPlayGround(copyController.Pg.GetPlayGround())
 		copyController.Snake.len = sc.Snake.len
 		copyController.Snake.LastDirection = sc.Snake.LastDirection
-		nextStep := copyController.getNextMovableFoodDirection(move)
+		nextStep := copyController.GetNextMovableFoodDirection(move)
 		nextArray := []DIRECTION{nextStep}
 		if Simulate(copyController, nextArray, depth+1, snakeLength) {
 			sc.Pg.SetPlayGround(duplicate)
 			sc.moveSnakeToFood(nextArray)
 		} else {
 			sc.Pg.SetPlayGround(duplicate)
-			sc.moveSnakeToFood(remove(move, nextStep))
+			sc.moveSnakeToFood(Remove(move, nextStep))
 		}
 	} else {
 		sc.moveSnakeToFood(move)
@@ -49,7 +49,7 @@ func Simulate(sc *SimpleSnakeController, move []DIRECTION, depth, snakeLength in
 	}
 }
 
-func (sc *SimpleSnakeController) getNextMovableFoodDirection(move []DIRECTION) DIRECTION {
+func (sc *SimpleSnakeController) GetNextMovableFoodDirection(move []DIRECTION) DIRECTION {
 	dir := move[0]
 	var x, y = sc.Pg.GetFood()
 	if sc.Snake.Head.X < x && contains(move, RIGHT) {
@@ -64,7 +64,7 @@ func (sc *SimpleSnakeController) getNextMovableFoodDirection(move []DIRECTION) D
 	return dir
 }
 
-func remove(move []DIRECTION, element DIRECTION) []DIRECTION {
+func Remove(move []DIRECTION, element DIRECTION) []DIRECTION {
 	movecopy := []DIRECTION{}
 	for ele := range move {
 		if DIRECTION(ele) == element {
