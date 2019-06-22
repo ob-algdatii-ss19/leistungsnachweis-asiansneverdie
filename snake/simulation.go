@@ -68,7 +68,7 @@ func (sc *SimpleSnakeController) GetNextMovableFoodDirection(move []DIRECTION) D
 func Remove(move []DIRECTION, element DIRECTION) []DIRECTION {
 	movecopy := []DIRECTION{}
 	for ele := range move {
-		if DIRECTION(ele) == element {
+		if DIRECTION(ele) != element {
 			movecopy = append(movecopy, DIRECTION(ele))
 		}
 	}
