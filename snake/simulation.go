@@ -21,12 +21,14 @@ func Simulate(sc *SimpleSnakeController, move []DIRECTION, depth, snakeLength in
 		duplicate := copyController.Pg.CopyPlayGround(copyController.Pg.GetPlayGround())
 		copyController.Snake.len = sc.Snake.len
 		copyController.Snake.LastDirection = sc.Snake.LastDirection
-		if Simulate(copyController, move[:1], depth+1, snakeLength) {
+		nextStep := copyController.getNextMovableFoodDirection(move)
+		nextArray := []DIRECTION{nextStep}
+		if Simulate(copyController, nextArray, depth+1, snakeLength) {
 			sc.Pg.SetPlayGround(duplicate)
-			sc.moveSnakeToFood(move[:1])
+			sc.moveSnakeToFood(nextArray)
 		} else {
 			sc.Pg.SetPlayGround(duplicate)
-			sc.moveSnakeToFood(move[1:])
+			sc.moveSnakeToFood(remove(move, nextStep))
 		}
 	} else {
 		sc.moveSnakeToFood(move)
@@ -101,7 +103,7 @@ func Remove(move []DIRECTION, element DIRECTION) []DIRECTION {
 	return movecopy
 }
 
-func (sc *SimpleSnakeController) GetNextMovableFoodDirection(move []DIRECTION) DIRECTION {
+func (sc *SimpleSnakeController) getNextMovableFoodDirection(move []DIRECTION) DIRECTION {
 	dir := move[0]
 	var x, y = sc.Pg.GetFood()
 	if sc.Snake.Head.X < x && contains(move, RIGHT) {
@@ -116,10 +118,10 @@ func (sc *SimpleSnakeController) GetNextMovableFoodDirection(move []DIRECTION) D
 	return dir
 }
 
-func Remove(move []DIRECTION, element DIRECTION) []DIRECTION {
+func remove(move []DIRECTION, element DIRECTION) []DIRECTION {
 	movecopy := []DIRECTION{}
 	for ele := range move {
-		if DIRECTION(ele) != element {
+		if DIRECTION(ele) == element {
 			movecopy = append(movecopy, DIRECTION(ele))
 		}
 	}
