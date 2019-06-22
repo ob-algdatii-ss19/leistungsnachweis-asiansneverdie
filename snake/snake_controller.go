@@ -50,12 +50,14 @@ func (sc *SimpleSnakeController) NextStep() {
 		duplicate := copyController.Pg.CopyPlayGround(copyController.Pg.GetPlayGround())
 		copyController.Snake.len = sc.Snake.len
 		copyController.Snake.LastDirection = sc.Snake.LastDirection
-		if Simulate(copyController, move[:1], 0, copyController.Snake.len) {
+		nextStep := copyController.GetNextMovableFoodDirection(move)
+		nextArray := []DIRECTION{nextStep}
+		if Simulate(copyController, nextArray, 0, copyController.Snake.len) {
 			sc.Pg.SetPlayGround(duplicate)
-			sc.moveSnakeToFood(move[:1])
+			sc.moveSnakeToFood(nextArray)
 		} else {
 			sc.Pg.SetPlayGround(duplicate)
-			sc.moveSnakeToFood(move[1:])
+			sc.moveSnakeToFood(Remove(move, nextStep))
 		}
 	case 3:
 		// move to food
