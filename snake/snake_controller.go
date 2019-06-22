@@ -1,5 +1,11 @@
 package snake
 
+import (
+	"fmt"
+	"github.com/jinzhu/copier"
+	"github.com/mohae/deepcopy"
+)
+
 type DIRECTION int
 
 const (
@@ -10,34 +16,49 @@ const (
 )
 
 type SimpleSnakeController struct {
-	pg    Playground
+	Pg    Playground
 	Snake Snake
 }
 
 func NewSnakeController(pg Playground, snake Snake) SController {
 	sc := new(SimpleSnakeController)
-	sc.pg = pg
+	sc.Pg = pg
 	sc.Snake = snake
 
 	return sc
 }
 
 func (sc *SimpleSnakeController) NextStep() {
-	move := GetDirections(sc.pg.GetPlayGround())
+	move := GetDirections(sc.Pg.GetPlayGround())
 	switch len(move) {
 	case 0:
-		// TODO: End GAME
+		// Default, End Game
+		sc.setNewHead(RIGHT)
 	case 1:
 		// move in the one direction
 		sc.setLastTail()
 		sc.setNewHead(move[0])
 	case 2:
-		// TODO: Decision... another switch case -> Algorithm
-		sc.setLastTail()
-		sc.setNewHead(move[0])
+		//copyController := copySimpleSnakeController(sc)
+		copied := deepcopy.Copy(sc)
+		copyController := copied.(*SimpleSnakeController)
+		err := copier.Copy(copyController.Pg, sc.Pg)
+		if err != nil {
+			fmt.Println("Error occurred while copying")
+		}
+		duplicate := copyController.Pg.CopyPlayGround(copyController.Pg.GetPlayGround())
+		copyController.Snake.len = sc.Snake.len
+		copyController.Snake.LastDirection = sc.Snake.LastDirection
+		if Simulate(copyController, move[:1], 0, copyController.Snake.len) {
+			sc.Pg.SetPlayGround(duplicate)
+			sc.moveSnakeToFood(move[:1])
+		} else {
+			sc.Pg.SetPlayGround(duplicate)
+			sc.moveSnakeToFood(move[1:])
+		}
 	case 3:
 		// move to food
-		sc.moveSnakeToFood()
+		sc.moveSnakeToFood(move)
 	default:
 	}
 }
@@ -46,23 +67,51 @@ func (sc *SimpleSnakeController) GetSnake() Snake {
 	return sc.Snake
 }
 
-func (sc *SimpleSnakeController) moveSnakeToFood() {
-	dir := DOWN
-	var x, y = sc.pg.GetFood()
-	if sc.Snake.Head.X < x {
+func (sc *SimpleSnakeController) moveSnakeToFood(move []DIRECTION) {
+	dir := move[0]
+	var x, y = sc.Pg.GetFood()
+	if sc.Snake.Head.X < x && contains(move, RIGHT) {
 		dir = RIGHT
-	} else if sc.Snake.Head.X > x {
+	} else if sc.Snake.Head.X > x && contains(move, LEFT) {
 		dir = LEFT
-	} else if sc.Snake.Head.Y < y {
+	} else if sc.Snake.Head.Y < y && contains(move, DOWN) {
 		dir = DOWN
-	} else {
+	} else if contains(move, UP) {
 		dir = UP
 	}
 	// if snake got food dont delete the last tail
 	if sc.getNextPGField(dir) != FOOD {
 		sc.setLastTail()
+	} else {
+		sc.Snake.len++
 	}
 	sc.setNewHead(dir)
+}
+
+func contains(s []DIRECTION, e DIRECTION) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
+}
+
+func copySimpleSnakeController(sc *SimpleSnakeController) *SimpleSnakeController {
+	result := new(SimpleSnakeController)
+	result.Pg = sc.Pg
+	result.Snake = NewSnake(sc.Snake.len)
+	result.Snake.Head = new(SPart)
+	*result.Snake.Head = *sc.Snake.Head
+	rTail := result.Snake.Head.Next
+	sTail := sc.Snake.Head.Next
+	for sTail != nil {
+		rTail = new(SPart)
+		*rTail = *sTail
+		sTail = sTail.Next
+		rTail = rTail.Next
+	}
+	return result
 }
 
 func (sc *SimpleSnakeController) addTail() Snake {
@@ -93,7 +142,7 @@ func (sc *SimpleSnakeController) setNewHead(dir DIRECTION) {
 
 func (sc *SimpleSnakeController) getNextPGField(dir DIRECTION) CONTENT {
 	x, y := sc.getNextSnakeField(dir)
-	return sc.pg.GetContent(x, y)
+	return sc.Pg.GetContent(x, y)
 }
 
 func (sc *SimpleSnakeController) getNextSnakeField(dir DIRECTION) (int, int) {
@@ -101,13 +150,17 @@ func (sc *SimpleSnakeController) getNextSnakeField(dir DIRECTION) (int, int) {
 	x, y := s.X, s.Y
 	switch dir {
 	case UP:
-		y = y-1
+		y = y - 1
+		sc.Snake.LastDirection = UP
 	case DOWN:
-		y = y+1
+		y = y + 1
+		sc.Snake.LastDirection = DOWN
 	case RIGHT:
-		x = x+1
+		x = x + 1
+		sc.Snake.LastDirection = RIGHT
 	case LEFT:
-		x = x-1
+		x = x - 1
+		sc.Snake.LastDirection = LEFT
 	default:
 		// do nothing
 	}

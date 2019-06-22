@@ -6,13 +6,13 @@ import (
 
 func main() {
 	playground := snake.NewPlayground()
-	playground.CreateEmptyPlayground(40, 30)
+	playground.CreateEmptyPlayground(30, 20)
 	playground.CreateOuterBorders()
 	s := snake.NewSnake(4)
 	playground.CreateSnake(s)
 	snakeController := snake.NewSnakeController(playground, s)
 	//Speed in MillieSeconds
-	gameController := snake.NewPGController(playground, snakeController, 200)
+	gameController := snake.NewPGController(playground, snakeController, 50)
 
 	gameController.Start()
 
