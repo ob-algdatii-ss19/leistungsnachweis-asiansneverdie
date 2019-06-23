@@ -152,6 +152,3 @@ func TestPlaygroundImpl_PrintNoPanic(t *testing.T) {
 	playground.CreateOuterBorders()
 	playground.Print()
 }
-
-
-

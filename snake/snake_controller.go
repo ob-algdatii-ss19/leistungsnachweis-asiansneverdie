@@ -2,6 +2,7 @@ package snake
 
 import (
 	"fmt"
+
 	"github.com/jinzhu/copier"
 	"github.com/mohae/deepcopy"
 )
@@ -72,6 +73,7 @@ func (sc *SimpleSnakeController) GetSnake() Snake {
 func (sc *SimpleSnakeController) moveSnakeToFood(move []DIRECTION) {
 	dir := move[0]
 	var x, y = sc.Pg.GetFood()
+	//nolint
 	if sc.Snake.Head.X < x && contains(move, RIGHT) {
 		dir = RIGHT
 	} else if sc.Snake.Head.X > x && contains(move, LEFT) {
@@ -98,23 +100,6 @@ func contains(s []DIRECTION, e DIRECTION) bool {
 	}
 	return false
 }
-
-/*func copySimpleSnakeController(sc *SimpleSnakeController) *SimpleSnakeController {
-	result := new(SimpleSnakeController)
-	result.Pg = sc.Pg
-	result.Snake = NewSnake(sc.Snake.len)
-	result.Snake.Head = new(SPart)
-	*result.Snake.Head = *sc.Snake.Head
-	rTail := result.Snake.Head.Next
-	sTail := sc.Snake.Head.Next
-	for sTail != nil {
-		rTail = new(SPart)
-		*rTail = *sTail
-		sTail = sTail.Next
-		rTail = rTail.Next
-	}
-	return result
-}*/
 
 func (sc *SimpleSnakeController) addTail() Snake {
 	sc.Snake = NewSnake(sc.GetSnake().len + 1)
@@ -152,16 +137,16 @@ func (sc *SimpleSnakeController) getNextSnakeField(dir DIRECTION) (int, int) {
 	x, y := s.X, s.Y
 	switch dir {
 	case UP:
-		y = y - 1
+		y -= y
 		sc.Snake.LastDirection = UP
 	case DOWN:
-		y = y + 1
+		y += y
 		sc.Snake.LastDirection = DOWN
 	case RIGHT:
-		x = x + 1
+		x += x
 		sc.Snake.LastDirection = RIGHT
 	case LEFT:
-		x = x - 1
+		x -= x
 		sc.Snake.LastDirection = LEFT
 	default:
 		// do nothing

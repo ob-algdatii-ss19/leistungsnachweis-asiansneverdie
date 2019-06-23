@@ -2,11 +2,13 @@ package snake
 
 import (
 	"fmt"
+
 	"github.com/jinzhu/copier"
 	"github.com/mohae/deepcopy"
 )
 
 func Simulate(sc *SimpleSnakeController, move []DIRECTION, depth, snakeLength int) bool {
+	//nolint
 	if len(move) < 1 {
 		return false
 	} else if len(move) == 2 && depth < 3 {
@@ -43,14 +45,14 @@ func Simulate(sc *SimpleSnakeController, move []DIRECTION, depth, snakeLength in
 
 	if snakeLength < 1 {
 		return true
-	} else {
-		return Simulate(sc, GetDirections(sc.Pg.GetPlayGround()), depth, snakeLength-1)
 	}
+	return Simulate(sc, GetDirections(sc.Pg.GetPlayGround()), depth, snakeLength-1)
 }
 
 func (sc *SimpleSnakeController) GetNextMovableFoodDirection(move []DIRECTION) DIRECTION {
 	dir := move[0]
 	var x, y = sc.Pg.GetFood()
+	//nolint
 	if sc.Snake.Head.X < x && contains(move, RIGHT) {
 		return RIGHT
 	} else if sc.Snake.Head.X > x && contains(move, LEFT) {
