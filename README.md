@@ -1,4 +1,4 @@
-# algdatii-startercode
+# algdatii-snake
 
 ## About
 
