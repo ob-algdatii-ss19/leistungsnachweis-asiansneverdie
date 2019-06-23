@@ -48,58 +48,6 @@ func Simulate(sc *SimpleSnakeController, move []DIRECTION, depth, snakeLength in
 	} else {
 		return Simulate(sc, GetDirections(sc.Pg.GetPlayGround()), depth, snakeLength-1)
 	}
-	return Simulate(sc, GetDirections(sc.Pg.GetPlayGround()), depth, snakeLength-1)
-}
-
-func (sc *SimpleSnakeController) GetNextMovableFoodDirection(move []DIRECTION) DIRECTION {
-	dir := move[0]
-	var x, y = sc.Pg.GetFood()
-	//nolint
-	if sc.Snake.Head.X < x && contains(move, RIGHT) {
-		return RIGHT
-	} else if sc.Snake.Head.X > x && contains(move, LEFT) {
-		return LEFT
-	} else if sc.Snake.Head.Y < y && contains(move, DOWN) {
-		return DOWN
-	} else if contains(move, UP) {
-		return UP
-	}
-	return dir
-}
-
-func Remove(move []DIRECTION, element DIRECTION) []DIRECTION {
-	movecopy := []DIRECTION{}
-	for i := 0; i < len(move); i++ {
-		if DIRECTION(move[i]) != element {
-			movecopy = append(movecopy, DIRECTION(move[i]))
-		}
-	}
-	return movecopy
-}
-
-func (sc *SimpleSnakeController) GetNextMovableFoodDirection(move []DIRECTION) DIRECTION {
-	dir := move[0]
-	var x, y = sc.Pg.GetFood()
-	if sc.Snake.Head.X < x && contains(move, RIGHT) {
-		return RIGHT
-	} else if sc.Snake.Head.X > x && contains(move, LEFT) {
-		return LEFT
-	} else if sc.Snake.Head.Y < y && contains(move, DOWN) {
-		return DOWN
-	} else if contains(move, UP) {
-		return UP
-	}
-	return dir
-}
-
-func Remove(move []DIRECTION, element DIRECTION) []DIRECTION {
-	movecopy := []DIRECTION{}
-	for ele := range move {
-		if DIRECTION(ele) != element {
-			movecopy = append(movecopy, DIRECTION(ele))
-		}
-	}
-	return movecopy
 }
 
 func (sc *SimpleSnakeController) GetNextMovableFoodDirection(move []DIRECTION) DIRECTION {
