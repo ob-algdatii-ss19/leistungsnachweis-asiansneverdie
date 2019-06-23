@@ -14,20 +14,20 @@ func Simulate(sc *SimpleSnakeController, move []DIRECTION, depth, snakeLength in
 	} else if len(move) == 2 && depth < 3 {
 		copied := deepcopy.Copy(sc)
 		copyController := copied.(*SimpleSnakeController)
-		err := copier.Copy(copyController.pg, sc.pg)
+		err := copier.Copy(copyController.Pg, sc.Pg)
 		if err != nil {
 			fmt.Println("Error occurred while copying")
 		}
-		duplicate := copyController.pg.CopyPlayGround(copyController.pg.GetPlayGround())
+		duplicate := copyController.Pg.CopyPlayGround(copyController.Pg.GetPlayGround())
 		copyController.Snake.len = sc.Snake.len
 		copyController.Snake.LastDirection = sc.Snake.LastDirection
 		nextStep := sc.GetNextMovableFoodDirection(move)
 		nextArray := []DIRECTION{nextStep}
 		if Simulate(copyController, nextArray, depth+1, snakeLength) {
-			sc.pg.SetPlayGround(duplicate)
+			sc.Pg.SetPlayGround(duplicate)
 			sc.moveSnakeToFood(nextArray)
 		} else {
-			sc.pg.SetPlayGround(duplicate)
+			sc.Pg.SetPlayGround(duplicate)
 			sc.moveSnakeToFood(Remove(move, nextStep))
 		}
 	} else {
@@ -37,16 +37,16 @@ func Simulate(sc *SimpleSnakeController, move []DIRECTION, depth, snakeLength in
 
 	if sc.Pg.GetContent(snake.Head.X, snake.Head.Y) == BORDER {
 		return false
-	} else if sc.pg.GetContent(snake.Head.X, snake.Head.Y) == FOOD {
-		sc.pg.setRandomFood()
+	} else if sc.Pg.GetContent(snake.Head.X, snake.Head.Y) == FOOD {
+		sc.Pg.setRandomFood()
 	}
-	sc.pg.DeleteSnake()
-	sc.pg.CreateSnake(snake)
+	sc.Pg.DeleteSnake()
+	sc.Pg.CreateSnake(snake)
 
 	if snakeLength < 1 {
 		return true
 	} else {
-		return Simulate(sc, GetDirections(sc.pg.GetPlayGround()), depth, snakeLength-1)
+		return Simulate(sc, GetDirections(sc.Pg.GetPlayGround()), depth, snakeLength-1)
 	}
 	return Simulate(sc, GetDirections(sc.Pg.GetPlayGround()), depth, snakeLength-1)
 }
@@ -104,7 +104,7 @@ func Remove(move []DIRECTION, element DIRECTION) []DIRECTION {
 
 func (sc *SimpleSnakeController) GetNextMovableFoodDirection(move []DIRECTION) DIRECTION {
 	dir := move[0]
-	var x, y = sc.pg.GetFood()
+	var x, y = sc.Pg.GetFood()
 	if sc.Snake.Head.X < x && contains(move, RIGHT) {
 		return RIGHT
 	} else if sc.Snake.Head.X > x && contains(move, LEFT) {
