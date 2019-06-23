@@ -35,4 +35,4 @@ Nach ausführen der main wird nun in der Console das Snake Spiel angezeigt.
 
 Eine Aufnahme aus dem Spiel könnte beispielsweise so aussehen:
 
-![alt text](https://github.com/ob-algdatii-ss19/leistungsnachweis-asiansneverdie/tree/feature/readme/snake_game.png)
+![Screenshot](https://github.com/ob-algdatii-ss19/leistungsnachweis-asiansneverdie/tree/feature/readme/snake_game.png)
