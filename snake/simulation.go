@@ -46,7 +46,7 @@ func Simulate(sc *SimpleSnakeController, move []DIRECTION, snakeLength int) bool
 	if snakeLength < 1 {
 		return true
 	} else {
-		return Simulate(sc, GetDirections(sc.Pg.GetPlayGround()), depth, snakeLength - 1)
+		return Simulate(sc, GetDirections(sc.Pg.GetPlayGround()), depth, snakeLength-1)
 	}
 	return Simulate(sc, GetDirections(sc.Pg.GetPlayGround()), depth, snakeLength-1)
 }
