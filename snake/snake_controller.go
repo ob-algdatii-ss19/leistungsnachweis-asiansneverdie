@@ -137,16 +137,16 @@ func (sc *SimpleSnakeController) getNextSnakeField(dir DIRECTION) (int, int) {
 	x, y := s.X, s.Y
 	switch dir {
 	case UP:
-		y -= 1
+		y--
 		sc.Snake.LastDirection = UP
 	case DOWN:
-		y += 1
+		y++
 		sc.Snake.LastDirection = DOWN
 	case RIGHT:
-		x += 1
+		x++
 		sc.Snake.LastDirection = RIGHT
 	case LEFT:
-		x -= 1
+		x--
 		sc.Snake.LastDirection = LEFT
 	default:
 		// do nothing
