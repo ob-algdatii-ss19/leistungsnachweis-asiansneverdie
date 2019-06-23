@@ -40,7 +40,6 @@ func (sc *SimpleSnakeController) NextStep() {
 		sc.setLastTail()
 		sc.setNewHead(move[0])
 	case 2:
-		//copyController := copySimpleSnakeController(sc)
 		copied := deepcopy.Copy(sc)
 		copyController := copied.(*SimpleSnakeController)
 		err := copier.Copy(copyController.Pg, sc.Pg)
@@ -99,23 +98,6 @@ func contains(s []DIRECTION, e DIRECTION) bool {
 		}
 	}
 	return false
-}
-
-func copySimpleSnakeController(sc *SimpleSnakeController) *SimpleSnakeController {
-	result := new(SimpleSnakeController)
-	result.Pg = sc.Pg
-	result.Snake = NewSnake(sc.Snake.len)
-	result.Snake.Head = new(SPart)
-	*result.Snake.Head = *sc.Snake.Head
-	rTail := result.Snake.Head.Next
-	sTail := sc.Snake.Head.Next
-	for sTail != nil {
-		rTail = new(SPart)
-		*rTail = *sTail
-		sTail = sTail.Next
-		rTail = rTail.Next
-	}
-	return result
 }
 
 func (sc *SimpleSnakeController) addTail() Snake {
