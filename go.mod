@@ -1,4 +1,4 @@
-module snake
+module github.com/ob-algdatii-ss19/leistungsnachweis-asiansneverdie
 
 go 1.12
 
