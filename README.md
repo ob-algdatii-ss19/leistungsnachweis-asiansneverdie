@@ -24,6 +24,17 @@ und ausführen mit:
 $ go run main.go
 ```
 
+## Algorithmus
+
+Der Algorithmus hat 4 Fälle.
+* 0 Wege in die die Schlange gehen kann resultiert im Ende. (Sie ist gestorben)
+* 1 Weg -> Sie muss den Weg laufen
+* 2 Wege -> Unsere Simulation kommt zum Einsatz. Wir simulieren, ob die Schlange ihre komplette Länge überlebt, wenn sie sich für 1 der beiden Wege entscheidet. Falls 
+** ja, dann läuft sie diesen Weg
+** nein, dann den anderen
+* Falls sie in der Simulation wieder auf 2 Möglichkeiten trifft, entscheidet sie wieder wie oben. Das ganze geschieht bis zu einer Tiefe von 3.
+* 3 Wege -> Die Schlange läuft den schnellsten Weg zum Essen.
+
 ## Usage
 
 Nach ausführen der main wird nun in der Console das Snake Spiel angezeigt.
