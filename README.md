@@ -1,5 +1,6 @@
 # algdatii-snake
 
+[![Build Status](https://travis-ci.com/ob-algdatii-ss19/leistungsnachweis-asiansneverdie.svg?branch=develop)](https://travis-ci.com/ob-algdatii-ss19/leistungsnachweis-asiansneverdie)
 ## About
 
 Unser Programm lässt Snake durch eine KI spielen, welche bei einer Entscheidung von genau 2 Möglichkeiten den weiteren Weg simuliert und anhand dessen entscheidet.
@@ -46,4 +47,4 @@ Nach ausführen der main wird nun in der Console das Snake Spiel angezeigt.
 
 Eine Aufnahme aus dem Spiel könnte beispielsweise so aussehen:
 
-![Screenshot](https://github.com/ob-algdatii-ss19/leistungsnachweis-asiansneverdie/tree/feature/readme/snake_game.png)
+![Screenshot](https://github.com/ob-algdatii-ss19/leistungsnachweis-asiansneverdie/tree/gh-pages/snake_game.png)
