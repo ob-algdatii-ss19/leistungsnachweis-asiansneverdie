@@ -66,9 +66,9 @@ func TestSimpleSnakeController_RunSimulation(t *testing.T) {
 	pg.CreateOuterBorders()
 	pg.setStartFood()
 	snake := NewSnake(5)
-	snake.Head.X, snake.Head.Y = 4, 1
+	snake.Head.X, snake.Head.Y = 5, 1
 	tmp := snake.Head
-	for i := 4; i >= 1; i-- {
+	for i := 5; i >= 1; i-- {
 		tmp = tmp.Next
 		tmp.X, tmp.Y = i, 2
 	}
