@@ -119,3 +119,15 @@ func TestSimpleSnakeController_RunSimulationDontGoIn(t *testing.T) {
 		t.Errorf("val on this field was %d; want %d", int(val), int(HEAD))
 	}
 }
+
+func TestSimulationRemove(t *testing.T) {
+	arr := []DIRECTION{}
+	arr = append(arr, UP)
+	res := Remove(arr, LEFT)
+	if len(res) != 1 {
+		t.Errorf("Length is %d; want %d", len(res), 1)
+	}
+	if res[0] != UP {
+		t.Errorf("Direction is %d; want %d", int(res[0]), int(UP))
+	}
+}

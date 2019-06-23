@@ -100,11 +100,6 @@ func contains(s []DIRECTION, e DIRECTION) bool {
 	return false
 }
 
-func (sc *SimpleSnakeController) addTail() Snake {
-	sc.Snake = NewSnake(sc.GetSnake().len + 1)
-	return sc.Snake
-}
-
 //set the second last tail to nil
 func (sc *SimpleSnakeController) setLastTail() {
 	first := sc.Snake.Head

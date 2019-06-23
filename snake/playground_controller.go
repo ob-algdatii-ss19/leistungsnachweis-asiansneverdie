@@ -26,14 +26,21 @@ func (gc *gameController) Start() {
 	for {
 		gc.pg.Print()
 		time.Sleep(time.Duration(gc.speed) * time.Millisecond)
-		gc.sc.NextStep()
-		snake = gc.sc.GetSnake()
-		if gc.pg.GetContent(snake.Head.X, snake.Head.Y) == BORDER {
+		if !gc.nextPeriod(snake) {
 			break
-		} else if gc.pg.GetContent(snake.Head.X, snake.Head.Y) == FOOD {
-			gc.pg.setRandomFood()
 		}
-		gc.pg.DeleteSnake()
-		gc.pg.CreateSnake(snake)
 	}
+}
+
+func (gc *gameController) nextPeriod(snake Snake) bool {
+	gc.sc.NextStep()
+	snake = gc.sc.GetSnake()
+	if gc.pg.GetContent(snake.Head.X, snake.Head.Y) == BORDER {
+		return false
+	} else if gc.pg.GetContent(snake.Head.X, snake.Head.Y) == FOOD {
+		gc.pg.setRandomFood()
+	}
+	gc.pg.DeleteSnake()
+	gc.pg.CreateSnake(snake)
+	return true
 }

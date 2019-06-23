@@ -6,10 +6,12 @@ type SController interface {
 
 	//returns the snake
 	GetSnake() Snake
-	addTail() Snake
 }
 
 type PlayGroundController interface {
 	// Starts the Snake
 	Start()
+
+	// calculates the next period
+	nextPeriod(snake Snake) bool
 }

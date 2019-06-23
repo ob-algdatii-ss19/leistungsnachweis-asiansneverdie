@@ -150,5 +150,7 @@ func TestPlaygroundImpl_PrintNoPanic(t *testing.T) {
 	playground := NewPlayground()
 	playground.CreateEmptyPlayground(20, 10)
 	playground.CreateOuterBorders()
+	playground.CreateSnake(NewSnake(5))
+	playground.setRandomFood()
 	playground.Print()
 }
