@@ -6,7 +6,7 @@ pipeline {
                 docker { image 'obraun/vss-jenkins' }
             }
             steps {
-                sh 'echo go test -v'
+                sh 'cd snake && go test --covermode=count'
                 sh 'echo go test -bench=.'
             }
         }
