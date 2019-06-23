@@ -45,14 +45,14 @@ func Simulate(sc *SimpleSnakeController, move []DIRECTION, depth, snakeLength in
 
 	if snakeLength < 1 {
 		return true
-	} else {
-		return Simulate(sc, GetDirections(sc.Pg.GetPlayGround()), depth, snakeLength-1)
 	}
+	return Simulate(sc, GetDirections(sc.Pg.GetPlayGround()), depth, snakeLength-1)
 }
 
 func (sc *SimpleSnakeController) GetNextMovableFoodDirection(move []DIRECTION) DIRECTION {
 	dir := move[0]
 	var x, y = sc.Pg.GetFood()
+	//nolint
 	if sc.Snake.Head.X < x && contains(move, RIGHT) {
 		return RIGHT
 	} else if sc.Snake.Head.X > x && contains(move, LEFT) {
@@ -68,7 +68,9 @@ func (sc *SimpleSnakeController) GetNextMovableFoodDirection(move []DIRECTION) D
 func Remove(move []DIRECTION, element DIRECTION) []DIRECTION {
 	movecopy := []DIRECTION{}
 	for i := 0; i < len(move); i++ {
+		//nolint
 		if DIRECTION(move[i]) != element {
+			//nolint
 			movecopy = append(movecopy, DIRECTION(move[i]))
 		}
 	}
