@@ -40,7 +40,6 @@ func (sc *SimpleSnakeController) NextStep() {
 		sc.setLastTail()
 		sc.setNewHead(move[0])
 	case 2:
-		//copyController := copySimpleSnakeController(sc)
 		copied := deepcopy.Copy(sc)
 		copyController := copied.(*SimpleSnakeController)
 		err := copier.Copy(copyController.Pg, sc.Pg)
